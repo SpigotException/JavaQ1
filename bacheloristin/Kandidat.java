@@ -59,5 +59,41 @@ public class Kandidat {
 	public void setNochdabei(boolean nochdabei) {
 		this.nochdabei = nochdabei;
 	}
+	public void fliegeRaus( ) {
+		nochdabei = false;
+	}
+	public void resetQuotenPunkte() {
+		quotenPunkte = 0;
+		
+	}
+	public void erhöheQuotenPunkte(int pPunkte) {
+		if (pPunkte>0) {
+			quotenPunkte += pPunkte;
+		}
 
+		
+	}
+	public void senkeQuotenPunkte(int pPunkte) {
+
+		if (quotenPunkte-pPunkte< 0) {
+			quotenPunkte -= pPunkte;
+		}
+		
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Kandidat [name=" + name + ", gebDatum=" + gebDatum + ", weiblich=" + weiblich + ", quotenPunkte="
+				+ quotenPunkte + ", nochdabei=" + nochdabei + "]";
+	}
+
+	public boolean istAelterAls(Kandidat pKandidat) {
+		if (pKandidat.getGebDatum()> gebDatum) {
+			return true;
+		}
+		
+		return false;
+		
+	}
 }
