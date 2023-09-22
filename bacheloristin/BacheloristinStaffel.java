@@ -1,6 +1,8 @@
 package bacheloristin;
 
 
+import java.sql.Date;
+
 import gui.GUI;
 import linear.List;
 import linear.ListWithViewer;
@@ -49,6 +51,7 @@ public class BacheloristinStaffel {
 			while(getJungsListe().hasAccess()) {
 				getJungsListe().getContent().resetQuotenPunkte();
 				getJungsListe().next();
+				
 			}
 		}
 
@@ -106,9 +109,39 @@ public class BacheloristinStaffel {
 		}
 
 	// TODO: Teil 2: Aufgabe f) gibQuotenLetzten
+			
+		public Kandidat gibQuotenPunkte() {
+			if(jungsListe == null) {
+				return null;
+			}
+			
+			Kandidat result = null;
+			
+			getJungsListe().toFirst();
+		result =	jungsListe.getContent();
+			while(getJungsListe().hasAccess()) {
 
+				if (result.getQuotenPunkte()> jungsListe.getContent().getQuotenPunkte()) {
+					
+					result = jungsListe.getContent();
+				
+				}
+					jungsListe.next();
+			
+			}
+			
+			return result;
+			
+		}
 
-	// TODO: Teil 2: Aufgabe g) gibRentnerListe
+	public ListWithViewer<Kandidat> gibRenter(){
+		ListWithViewer<Kandidat> l = new ListWithViewer<>();
+		
+		
+		
+		return l;
+		
+	}
 
 
 
@@ -181,11 +214,34 @@ public class BacheloristinStaffel {
 		}
 	}
 	public void name() {
+		
+		
 		BacheloristinStaffel.getJungsListe().toFirst();
 		while(BacheloristinStaffel.getJungsListe().hasAccess()) {
+
 			BacheloristinStaffel.getJungsListe().getContent().setQuotenPunkte(10);
+
 			BacheloristinStaffel.getJungsListe().next();
 		}
+		
+		BacheloristinStaffel.getJungsListe().toFirst();
+		int i = 0;
+		while(BacheloristinStaffel.getJungsListe().hasAccess()&&i <1) {
+			i++;
+			BacheloristinStaffel.getJungsListe().getContent().setQuotenPunkte(10);
+			BacheloristinStaffel.getJungsListe().getContent().setQuotenPunkte(9);
+			BacheloristinStaffel.getJungsListe().next();
+			
+		}
+	}
+	public int getAktuellesDatum() {
+		long m = System.currentTimeMillis();
+		Date date = new Date(m);
+		String string = date.toString();
+		string = string.replaceAll("-", "");
+		
+		int i = Integer.parseInt(string);
+		return i;
 	}
 
 
