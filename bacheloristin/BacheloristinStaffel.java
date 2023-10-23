@@ -234,6 +234,7 @@ public class BacheloristinStaffel {
 			
 		}
 	}
+	
 	public int getAktuellesDatum() {
 		long m = System.currentTimeMillis();
 		Date date = new Date(m);
@@ -274,4 +275,21 @@ public class BacheloristinStaffel {
 		BacheloristinStaffel.jungsListe = jungsListe;
 	}
 
+	
+		public boolean isKandidat(String pKandidatName) {
+			if(jungsListe== null) {
+				return false;
+			}
+			jungsListe.toFirst();
+			while(jungsListe.hasAccess()) {
+				if(pKandidatName.equals(jungsListe.getContent().getName())) {
+					return true;
+				}
+				jungsListe.next();
+			}
+			return false;
+		
+	
+
+}
 }
