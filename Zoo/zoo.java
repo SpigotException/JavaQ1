@@ -12,6 +12,8 @@ import gui.GUI;
 import linear.ListWithViewer;
 
 public class zoo {
+	
+	protected boolean hunger;
 	BildAnzeigen b1= new BildAnzeigen();
 	
 	public ListWithViewer<Tier> zooTiere = new ListWithViewer<>();
@@ -19,6 +21,7 @@ public class zoo {
 	public zoo(){
 		
 		initList();
+		hunger = false;
 		
 	}
 	
@@ -38,7 +41,7 @@ public class zoo {
 		
 		Löwe l1 = new Löwe("Hans", 234, false,  6);
 		
-		b1.anzeigen("\\\\MNSSERVER\\maxwei$\\Dokumente\\Informatik LK\\Java_Q1Q2\\javaQ1Q2\\Zoo\\normal.jpg", 1920 ,1080);
+		b1.anzeigen("\\\\MNSSERVER\\maxwei$\\Dokumente\\Informatik LK\\Java_Q1Q2\\javaQ1Q2\\Zoo\\Löwe.jpeg", 680 ,450);
 	
 	
 		Löwe l2 = new Löwe("Brigitte", 700, false, 10);
@@ -57,19 +60,46 @@ public class zoo {
 	public void fütternAlleFüttern() {
 		
 		zooTiere.toFirst();
+
 		while (zooTiere.hasAccess()) {
 			
+		
 			zooTiere.getContent().füttern();
+		
 			zooTiere.next();
 			
-			
-
-			
 		}
-	
+		
 		b1.anzeigen("\\\\MNSSERVER\\maxwei$\\Dokumente\\Informatik LK\\Java_Q1Q2\\javaQ1Q2\\Zoo\\mqdefault.jpg",320,180);
+		setTimeout(()-> {
+		hunger	= true;
+		b1.anzeigen("\\\\MNSSERVER\\maxwei$\\Dokumente\\Informatik LK\\Java_Q1Q2\\javaQ1Q2\\Zoo\\Löwe.jpeg", 680 ,450);
+		}, 10000);
+		
+
+		
 		
 	
+	
+	
+	}	public boolean isHunger() {
+		return hunger;
+	}
+
+	public void setHunger(boolean hunger) {
+		this.hunger = hunger;
+	}
+
+	public static void setTimeout(Runnable runnable, int delay){
+	    new Thread(() -> {
+	        try {
+	            Thread.sleep(delay);
+	            runnable.run();
+	        }
+	        catch (Exception e){
+	            System.err.println(e);
+	        }
+	    }).start();
 	}
 
 	

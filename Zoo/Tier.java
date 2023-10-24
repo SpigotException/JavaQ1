@@ -1,11 +1,14 @@
 package Zoo;
 
+import java.util.concurrent.TimeUnit;
+
 public abstract class Tier {
 	
 	protected String name;
 	protected double gewicht;
 	protected boolean weiblich;
 	protected double portionsGröße;
+
 
 	
 	public Tier(String name, double gewicht, boolean weiblich, double portionsGröße) {
@@ -14,6 +17,7 @@ public abstract class Tier {
 		this.gewicht = gewicht;
 		this.weiblich = weiblich;
 		this.portionsGröße = portionsGröße;
+		
 	
 	}
 
@@ -52,13 +56,18 @@ public abstract class Tier {
 
 	public void füttern() {
 		gewicht+= portionsGröße;
+	
+		
+
+	
 	}
-		
 	
 		
+	
+
 		
 	
-	
+
 	public  abstract void bürsten();
 
 	@Override
