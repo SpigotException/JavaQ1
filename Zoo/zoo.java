@@ -24,7 +24,7 @@ public class zoo {
 		hunger = false;
 		
 	}
-	
+	//
 	 private Image image;
 	public static void main(String[] args) {
 		zoo tb = new zoo();
