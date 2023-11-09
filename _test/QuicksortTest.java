@@ -16,18 +16,41 @@ public class QuicksortTest {
 		anzahlVergleiche = 0;
 	
 	}
-
-	public List<String> quicksort(List<String> pStrings){
+	ListWithViewer<String> links = new ListWithViewer<String>();
+	ListWithViewer<String> rechts = new ListWithViewer<String>();
+	ListWithViewer<String> ergebnis = new ListWithViewer<String>();
+	
+	public ListWithViewer<String> quicksort(List<String> pStrings){
 		if(pStrings.isEmpty()) {
 			return null;
+			
+		}
+		pStrings.toFirst();
+		pStrings.next();
+		if(!pStrings.hasAccess()) {
+			return (ListWithViewer<String>) pStrings;
 		}
 		
-		//
 		
-		List<String> links = new ListWithViewer<String>();
-		List<String> rechts = new ListWithViewer<String>();
-		List<String> ergebnis = new ListWithViewer<String>();
+		pStrings.toFirst();
+		String pivot = pStrings.getContent();
+		pStrings.remove();
+		
+		while(pStrings.hasAccess()) {
+			if (pStrings.getContent().compareTo(pivot) >=0) {
+				links.append(pStrings.getContent());
+				pStrings.remove();
+				
+			}else {
+				rechts.append(pStrings.getContent());
+				pStrings.remove();
+				}
+			}
 	
+				
+		quicksort(rechts);
+		quicksort(links);
+
 		return ergebnis;		
 	}
 
