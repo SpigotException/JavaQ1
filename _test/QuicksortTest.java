@@ -14,11 +14,20 @@ public class QuicksortTest {
 
 	public QuicksortTest(){
 		anzahlVergleiche = 0;
+	
 	}
 
 	public List<String> quicksort(List<String> pStrings){
+		if(pStrings.isEmpty()) {
+			return null;
+		}
+		
+		
+		
+		List<String> links = new ListWithViewer<String>();
+		List<String> rechts = new ListWithViewer<String>();
 		List<String> ergebnis = new ListWithViewer<String>();
-		//TODO
+	
 		return ergebnis;		
 	}
 
