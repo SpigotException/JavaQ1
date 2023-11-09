@@ -48,7 +48,7 @@ public class QuicksortTest {
 			}
 	
 				
-		quicksort(rechts);
+		quicksort(rechts);//
 		quicksort(links);
 
 		return ergebnis;		
