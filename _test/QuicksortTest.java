@@ -43,7 +43,7 @@ public class QuicksortTest {
 				
 			}else {
 				rechts.append(pStrings.getContent());
-				pStrings.remove();
+				pStrings.remove();//
 				}
 			}
 	
