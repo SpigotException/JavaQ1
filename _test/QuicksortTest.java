@@ -39,7 +39,7 @@ public class QuicksortTest {
 		while(pStrings.hasAccess()) {
 			if (pStrings.getContent().compareTo(pivot) >=0) {
 				links.append(pStrings.getContent());
-				pStrings.remove();//
+				pStrings.remove();
 				
 			}else {
 				rechts.append(pStrings.getContent());
