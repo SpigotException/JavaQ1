@@ -16,19 +16,22 @@ public class QuicksortTest {
 		anzahlVergleiche = 0;
 	
 	}
-	ListWithViewer<String> links = new ListWithViewer<String>();
-	ListWithViewer<String> rechts = new ListWithViewer<String>();
-	ListWithViewer<String> ergebnis = new ListWithViewer<String>();
+
 	
-	public ListWithViewer<String> quicksort(List<String> pStrings){
+	public List<String> quicksort(List<String> pStrings){
+		
+		List<String> links = new List<String>();
+		List<String> rechts = new List<String>();
+		List<String> ergebnis = new List<String>();
+		
 		if(pStrings.isEmpty()) {
-			return null;
+			return pStrings;
 			
 		}
 		pStrings.toFirst();
 		pStrings.next();
 		if(!pStrings.hasAccess()) {
-			return (ListWithViewer<String>) pStrings;
+			return pStrings;
 		}
 		
 		
@@ -37,19 +40,22 @@ public class QuicksortTest {
 		pStrings.remove();
 		
 		while(pStrings.hasAccess()) {
-			if (pStrings.getContent().compareTo(pivot) >=0) {
+			if (pStrings.getContent().compareTo(pivot) <=0) {
 				links.append(pStrings.getContent());
 				pStrings.remove();
 				
 			}else {
 				rechts.append(pStrings.getContent());
-				pStrings.remove();//
+				pStrings.remove();
 				}
 			}
 	
 				
-		quicksort(rechts);
-		quicksort(links);
+		rechts = quicksort(rechts);
+		links = quicksort(links);
+		ergebnis = links;
+		ergebnis.append(pivot);
+		ergebnis.concat(rechts);
 
 		return ergebnis;		
 	}
@@ -63,6 +69,7 @@ public class QuicksortTest {
 		avengers.append("Spider Man");
 		avengers.append("Black Widow");
 		List<String> ergebnis = quicksort(avengers);
+		ausgeben(ergebnis);
 	}
 
 	public void quicksortTestGross(int pAnzahl){
