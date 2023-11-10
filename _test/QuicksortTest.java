@@ -24,7 +24,7 @@ public class QuicksortTest {
 		List<String> rechts = new List<String>();
 		List<String> ergebnis = new List<String>();
 		
-		if(pStrings.isEmpty()) {
+		if(pStrings.isEmpty()) {//
 			return pStrings;
 			
 		}
