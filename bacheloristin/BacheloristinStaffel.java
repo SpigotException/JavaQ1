@@ -2,6 +2,7 @@ package bacheloristin;
 
 
 import java.sql.Date;
+import java.util.Iterator;
 
 import gui.GUI;
 import linear.List;
@@ -77,16 +78,16 @@ public class BacheloristinStaffel {
 
 			while(getJungsListe().hasAccess()) {
 				if (getJungsListe().getContent().getName().equals(pNameWer)) {
-					getJungsListe().getContent().erhöheQuotenPunkte(20);
+					getJungsListe().getContent().erhoeheQuotenPunkte(20);
 				
-					
+					//getJungsListe().getCurrentNode().getNextNode().getContentObject().getName().equals(wurdeUeberGelestert);
 				}
 				getJungsListe().next();
 		}
 			getJungsListe().toFirst();
 			while(getJungsListe().hasAccess()) {
 				if (getJungsListe().getContent().getName().equals(wurdeUeberGelestert)) {
-					getJungsListe().getContent().erhöheQuotenPunkte(10);
+					getJungsListe().getContent().erhoeheQuotenPunkte(10);
 				
 					
 				}
@@ -99,7 +100,7 @@ public class BacheloristinStaffel {
 			getJungsListe().toFirst();
 			while(getJungsListe().hasAccess()) {
 				if (getJungsListe().getContent().getName().equals(pString)) {
-					getJungsListe().getContent().erhöheQuotenPunkte(50);
+					getJungsListe().getContent().erhoeheQuotenPunkte(50);
 					
 				}
 				
@@ -132,6 +133,55 @@ public class BacheloristinStaffel {
 			
 			return result;
 			
+		}
+		
+		public int zÃ¤hlebis(String pName) {
+			int i = 0;
+			jungsListe.toFirst();
+			while(jungsListe.hasAccess()) {
+				i++;
+					if(jungsListe.getContent().getName().equals(pName)) {
+					
+						return i;
+					}
+					
+			jungsListe.next();
+			}
+			return i;
+			
+		}
+		
+	
+		//klausur Lernen
+		public void insertaAfterPString(String pName) {
+				
+			zÃ¤hlebis(pName);
+				int i = 0;
+				jungsListe.toFirst();
+				 while(i!=zÃ¤hlebis(pName)-1) {
+					 jungsListe.next();
+					 i++;
+				 }
+			
+				Kandidat k1 = new Kandidat("radnom", 1999, false);
+				jungsListe.insert(k1);
+
+				printList();
+		}
+		
+		public void printList() {
+		//System.out.println(i);
+			System.out.println("_______________");
+			
+			
+			
+			jungsListe.toFirst();
+		while(jungsListe.hasAccess()) {
+			
+			System.out.println(jungsListe.getContent().getName());
+			jungsListe.next();
+			
+		}
 		}
 
 	public ListWithViewer<Kandidat> gibRenter(){

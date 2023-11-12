@@ -30,6 +30,7 @@ public boolean warKandidatDabei(String pKandidatName) {
 		if (a == true) {
 			return true;
 		}
+	
 		staffelList.next();
 	}
 	return false;

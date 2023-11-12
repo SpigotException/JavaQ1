@@ -66,7 +66,7 @@ public class Kandidat {
 		quotenPunkte = 0;
 		
 	}
-	public void erhöheQuotenPunkte(int pPunkte) {
+	public void erhoeheQuotenPunkte(int pPunkte) {
 		if (pPunkte>0) {
 			quotenPunkte += pPunkte;
 		}
@@ -96,4 +96,6 @@ public class Kandidat {
 		return false;
 		
 	}
+
+
 }
