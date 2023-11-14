@@ -1,7 +1,9 @@
 package bacheloristin;
 
 
+import java.sql.Array;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import gui.GUI;
@@ -151,6 +153,55 @@ public class BacheloristinStaffel {
 			
 		}
 		
+		public int anzahl() {
+			
+			int i = 0;
+			jungsListe.toFirst();
+			while(jungsListe.hasAccess()) {
+				i++;
+				jungsListe.next();
+			}
+			return i;
+			
+		}
+		
+	
+		public void createRadomList(){
+			ArrayList<String> band = new ArrayList<String>();
+	
+				int a = anzahl();
+				int i = 0;
+				while (i< 10) {
+					jungsListe.toFirst();
+					i++;
+					int ir = (int) (Math.random()*a);
+					for (int i2=0; i2< ir; i2++) {
+						jungsListe.next();
+						System.out.println(jungsListe.getContent().getName());
+						if (band.contains(jungsListe.getContent().getName())) {
+							i--;
+						} else {
+							band.add(jungsListe.getContent().getName());
+							
+						}
+					}	
+				
+					
+					}
+				System.out.println(band);
+				}
+				
+			
+				
+	
+
+
+		
+			
+			
+			
+			
+		//}
 	
 		//klausur Lernen
 		public void insertaAfterPString(String pName) {
