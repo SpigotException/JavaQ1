@@ -60,6 +60,55 @@ public class QuicksortTest {
 		return ergebnis;		
 	}
 
+	public List<String> mergesort(List<String> pStrings){
+	
+		List<String> links = new List<String>();
+		List<String> rechts = new List<String>();
+		List<String> ergebnis = new List<String>();
+		
+		if(pStrings.isEmpty()) {
+			return pStrings;
+			
+		}
+		pStrings.toFirst();
+		pStrings.next();
+		if(!pStrings.hasAccess()) {
+			return pStrings;
+		}
+				
+		pStrings.toFirst();
+		while(pStrings.hasAccess()) {
+			rechts.append(pStrings.getContent());
+			pStrings.remove();
+			if (pStrings.hasAccess()) {
+				links.append(pStrings.getContent());
+				pStrings.remove();
+			}
+
+		}
+		rechts.toFirst();links.toFirst();
+		while(rechts.hasAccess() && links.hasAccess()) {
+	
+			if (rechts.hasAccess()) {
+				if(	rechts.getContent().compareTo(links.getContent()) <=0) {
+					ergebnis.append(rechts.getContent());
+					
+				}else {
+					
+					ergebnis.concat(links);
+				}
+			}
+	
+			
+		rechts = mergesort(rechts);
+		links = mergesort(links);
+		}
+		
+		return ergebnis;
+		
+		
+	}
+	
 	public void quicksortTestKlein(){
 		anzahlVergleiche = 0;
 		avengers = new ListWithViewer<String>();
@@ -84,6 +133,31 @@ public class QuicksortTest {
 		System.out.println("+++ Anzahl Vergleiche: "+anzahlVergleiche);
 	}
 
+	
+	public void mergeSortKlein(){
+		anzahlVergleiche = 0;
+		avengers = new ListWithViewer<String>();
+		avengers.append("Iron Man");
+		avengers.append("Captain America");
+		avengers.append("Thor");
+		avengers.append("Spider Man");
+		avengers.append("Black Widow");
+		List<String> ergebnis = mergesort(avengers);
+		ausgeben(ergebnis);
+	}
+
+	public void mergeSortTestGross(int pAnzahl){
+		anzahlVergleiche = 0;
+		List<String>strings = erzeugen(pAnzahl);
+		long startzeit = System.currentTimeMillis();
+		List<String> ergebnis = quicksort(strings);
+		long endzeit = System.currentTimeMillis();
+		ausgeben(ergebnis);
+		long verbrauchteZeit = endzeit - startzeit; 
+		System.out.println("+++ Zeitverbrauch: "+verbrauchteZeit+"ms +++");
+		System.out.println("+++ Anzahl Vergleiche: "+anzahlVergleiche);
+	}
+	
 	/**
 	 * erzeugt eine List mit zufaelligen Strings der Laenge 10.
 	 * @param pAnzahl
