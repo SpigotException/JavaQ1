@@ -2,6 +2,7 @@ package _test;
 import linear.List;
 import linear.ListWithViewer;
 import gui.GUI;
+import Hotel.Hotelbewertungssystem;
 import baeume.BinaryTree;
 import baeume.TreeViewer;
 
@@ -46,19 +47,83 @@ public class BinaryTreeTest {
 	}
 	
 	// Rahmenmethode
-	public int summe(){
-		return summe(suchbaum);
+
+	// Rahmenmethode
+	public int summe () {
+	return summe (suchbaum);
+	}
+	private int summe (BinaryTree<Integer> pTree) {	
+	int ergebnis = 0;
+
+	if( pTree.isEmpty()) {
+	return 0;
+	}
+
+	int wurzelzahl = pTree.getContent ();
+
+	int summeLinks = summe (pTree.getLeftTree());
+	int summeRechts = summe (pTree.getRightTree());
+	ergebnis = summeLinks + summeRechts + wurzelzahl;
+	
+	return ergebnis;
+	
 	}
 	
-
-	private int summe(BinaryTree<Integer> pTree) {
+	
+	public int gibTiefe() {
+		return gibTiefe (suchbaum);
+		}
+		private int gibTiefe (BinaryTree<Integer> pBaum) {
 		int ergebnis = 0;
-		// TODO programmieren:
-		// Abbruchbedingung, Wurzelbehandlung, 2 rekursive Aufrufe, Sachlogik
-		return ergebnis;
-	}
 
-	public static void main(String[] args) {
-		new GUI(new BinaryTreeTest());
-	}
+		if( pBaum.isEmpty()) {
+		return -1;
+		}
+		
+		int tiefel = gibTiefe (pBaum.getLeftTree());
+		int tiefeR = gibTiefe (pBaum.getRightTree());
+
+
+		if(tiefel > tiefeR) {
+			ergebnis = tiefel + 1 ;
+		}
+	
+		else {
+		ergebnis = tiefeR + 1;
+		
+		}
+		
+		
+		return ergebnis;
+		}
+
+		
+		
+		public List<Integer> postorder() {
+			return postorder (suchbaum);
+			}
+			private List<Integer> postorder (BinaryTree<Integer> pBaum) {
+			ListWithViewer<Integer> ergList = new ListWithViewer<>();
+			// Abbruchbedingung
+			if( pBaum.isEmpty()) {
+			return ergList;
+
+			}
+			List<Integer> linkeListe = postorder(pBaum.getLeftTree());
+			List<Integer> rechteListe = postorder(pBaum.getRightTree());
+			
+			int wurzelzahl = pBaum.getContent ();
+			ergList.concat(linkeListe);
+			ergList.concat(rechteListe);
+			ergList.append (wurzelzahl);
+			
+			return ergList;
+			}
+			
+			
+		
+
+			public static void main(String[] args) {
+				new GUI(new Hotelbewertungssystem());
+			}
 }

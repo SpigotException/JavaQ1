@@ -7,13 +7,13 @@ public class Configuration {
 	 * (StackWithViewer, QueueWithViewer, ListWithViewer)
 	 * langsam ablaufen 
 	 */
-	public static final int WARTEZEIT_LINEAR = 10;
+	public static final int WARTEZEIT_LINEAR = 2;
 	/**
 	 * Wartezeit, damit Binaerbaeume 
 	 * (TreeViewer)
 	 * langsam ablaufen 
 	 */
-	public static final int WARTEZEIT_BAEUME = 500;
+	public static final int WARTEZEIT_BAEUME = 0;
 	/**
 	 * Wartezeit, damit Graphen 
 	 * (GraphWithViewer) 
