@@ -25,8 +25,9 @@ public class Hotelbewertungssystem {
 	public void Bewerten(String pName, String pLand, double pBewertung) {
 		Hotel h1 = gibHotel(pName, pLand);
 		h1.setAnzahlBewertungen(h1.getAnzahlBewertungen()+1);
+	
 		if(pBewertung <=5) {
-			h1.setBewertungszahl(h1.getAnzahlBewertungen()+pBewertung);
+			h1.setBewertungszahl(h1.getBewertungszahl()+pBewertung);
 			
 		}
 		
