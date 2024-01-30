@@ -82,7 +82,7 @@ public class Standort implements ComparableContent<Standort>{
 
 	@Override
 	public String toString() {
-		return "Standort [name=" + name + ", land=" + land + ", Hotels=" + Hotels + "]";
+		return name + ", " + land;
 	}
 
 	public String getLand() {
@@ -100,6 +100,20 @@ public class Standort implements ComparableContent<Standort>{
 	public void setHotels(ListWithViewer<Hotel> hotels) {
 		Hotels = hotels;
 	}
-
+	
+	public Hotel gibBestBewertetes() {
+		
+		Hotels.toFirst();
+		Hotel current = Hotels.getContent();
+		while(!Hotels.hasAccess()) {			
+			if (current.getBewertungsdurchschnitt() > Hotels.getContent().getBewertungsdurchschnitt()) {
+				current = Hotels.getContent();
+			}
+			Hotels.next();
+		}
+		
+		return current;
+		
+	}
 	
 }

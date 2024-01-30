@@ -71,6 +71,7 @@ public class Hotel {
 	}
 
 
+
 	@Override
 	public String toString() {
 		return "Hotel [name=" + name + ", anschrift=" + anschrift + ", hotelkette=" + hotelkette + ", bewertungszahl="
