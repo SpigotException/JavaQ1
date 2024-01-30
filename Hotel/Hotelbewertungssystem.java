@@ -38,11 +38,11 @@ public class Hotelbewertungssystem {
 	}
 	public Hotel gibtDasBeseteHotel(String pStandort) {{
 
-		Standort s1 = new Standort("Hss", pStandort);
-			//standortBaum.search(s1).gibBestBewertetes();
-			return standortBaum.search(s1).gibBestBewertetes();
+		Standort s1 = new Standort(pStandort, "gsdgsd");
+		//standortBaum.search(s1).gibBestBewertetes();
+		return standortBaum.search(s1).gibBestBewertetes();
 	}
-	
+
 
 	}
 

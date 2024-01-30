@@ -58,17 +58,17 @@ public class Standort implements ComparableContent<Standort>{
 
 	@Override
 	public boolean isGreater(Standort pContent) {
-		return this.land.compareTo(pContent.getLand())>0;
+		return this.name.compareTo(pContent.getName())>0;
 	
 	}
 	@Override
 	public boolean isEqual(Standort pContent) {
-		return this.land.compareTo(pContent.getLand())==0;
+		return this.name.compareTo(pContent.getName())==0;
 	
 	}
 	@Override
 	public boolean isLess(Standort pContent) {
-		return this.land.compareTo(pContent.getLand())<0;
+		return this.name.compareTo(pContent.getName())<0;
 	
 	}
 
