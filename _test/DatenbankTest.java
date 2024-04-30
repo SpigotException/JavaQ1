@@ -12,7 +12,7 @@ public class DatenbankTest {
 	
 	public DatenbankTest() {
 		//                                    ip                       port database  user   password
-		connector = new DatabaseConnector("127.0.0.1", 3306, "schule", "root", "");
+		connector = new DatabaseConnector("10.232.130.4", 3306, "schule", "root", "");
 		String errorMessage = connector.getErrorMessage();
 		if(errorMessage != null) System.err.println(errorMessage);
 	}
@@ -58,6 +58,41 @@ public class DatenbankTest {
 				stunden = Integer.parseInt(stundenString);
 			}
 			String zeile = klasse+": "+stunden+" "+pFach;
+			System.out.println(zeile);
+			ergebnis.append(zeile);
+		}
+		return ergebnis;
+	}
+	
+
+	public ListWithViewer<String> klassenUnterricht1(){
+		ListWithViewer<String> ergebnis = new ListWithViewer<String>();
+		String sqlStatement = 
+				"SELECT s.name , s.vorname, k.name\r\n"
+				+ "FROM schueler  s\r\n"
+				+ "JOIN klasse k ON\r\n"
+				+ "s.klasse_id = k.id";
+		System.out.println(sqlStatement);
+
+		connector.executeStatement(sqlStatement);
+
+		String errorMessage = connector.getErrorMessage();
+		if(errorMessage != null)
+		{
+			System.err.println(errorMessage);
+			return null;
+		}
+		
+		QueryResult queryResult = connector.getCurrentQueryResult();
+
+		String[][] data = queryResult.getData();
+		for (int i = 0; i < data.length; i++) {
+			String Name = data[i][0];
+			String vorname = data[i][1];
+			String klasse = data[i][2];
+
+
+			String zeile = Name+": "+vorname +": "+ klasse;
 			System.out.println(zeile);
 			ergebnis.append(zeile);
 		}
