@@ -16,8 +16,13 @@ public class Datenbank {
 		connector = new DatabaseConnector("10.232.130.4", 3306, "schule", "root", "");
 		String errorMessage = connector.getErrorMessage();
 		if(errorMessage != null) System.err.println(errorMessage);
+		
+		ListWithViewer<schueler> sl = new ListWithViewer<>();
+		schueler s1 = new schueler("8a", "hans", "müller");
+		
 	}
-	
+
+
 
 	/**
 	 * Beispielmethode
