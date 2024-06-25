@@ -2,6 +2,8 @@ package _test;
 
 
 
+import org.apache.commons.collections15.functors.WhileClosure;
+
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -23,11 +25,25 @@ public class GraphTest {
 		Vertex vKassel = karte.getVertex("Kassel");
 		return tiefendurchlauf(vKassel);
 	}
-	
+
 	// rekursive Methode
 	private List<Vertex> tiefendurchlauf(Vertex pVertex) {
 		List<Vertex> ergebnis = new ListWithViewer<>();
-		// TODO selber programmieren!!!
+
+		if (pVertex.isMarked() == true) {
+			return ergebnis;
+
+		}
+		ergebnis.append(pVertex);
+		pVertex.setMark(true);
+
+		List<Vertex> nachbar = karte.getNeighbours(pVertex);
+		nachbar.toFirst();
+		while(nachbar.hasAccess()) {
+			ergebnis.concat(tiefendurchlauf(nachbar.getContent()));
+			nachbar.next();
+		}
+
 		return ergebnis;
 	}
 
@@ -38,11 +54,25 @@ public class GraphTest {
 		Vertex vKassel = karte.getVertex("Kassel");
 		return breitendurchlauf(vKassel);
 	}
-	
+
 	// NICHT-rekursive Methode
 	private List<Vertex> breitendurchlauf(Vertex pVertex) {
 		List<Vertex> ergebnis = new ListWithViewer<>();
-		// TODO selber programmieren!!!
+		ergebnis.append(pVertex);
+		pVertex.setMark(true);
+		ergebnis.toFirst();
+		while(ergebnis.hasAccess()) {
+			List<Vertex> nachbarn = karte.getNeighbours(ergebnis.getContent());
+			nachbarn.toFirst();
+			while(nachbarn.hasAccess()) {
+				if(nachbarn.getContent().isMarked() == false) {
+					nachbarn.getContent().setMark(true);
+					ergebnis.append(nachbarn.getContent());	
+				}
+				nachbarn.next();		
+			}
+			ergebnis.next();	
+		}
 		return ergebnis;
 	}
 
@@ -74,7 +104,7 @@ public class GraphTest {
 		karte.addEdge(frankfurt_koeln);
 
 		// *** weitere Vertices und Edges! ***
-		
+
 		Vertex hamburg = new Vertex("Hamburg");
 		karte.addVertex(hamburg);
 		Vertex berlin = new Vertex("Berlin");
@@ -136,7 +166,37 @@ public class GraphTest {
 		// auf ein geeignetes Layout umstellen
 		karte.switchToISOMLayout();
 	}
-	
+
+
+	public String getClosestNeighbour(String pID) {
+
+		Vertex v = karte.getVertex(pID);
+		List<Edge> edge = karte.getEdges(v);
+		edge.toFirst();
+		Edge kleinstes = edge.getContent();
+
+
+
+
+		while(edge.hasAccess()) {
+			Edge aktuell = edge.getContent();
+			if (aktuell.getWeight() >  edge.getContent().getWeight()) {
+				aktuell=  kleinstes;
+
+			}
+			edge.next();
+		}
+
+		Vertex[] vertexArray = kleinstes.getVertices();
+		if (!vertexArray[0].getID().equals(pID)) {
+			return vertexArray[0].getID();
+
+
+		}
+
+		return  vertexArray[1].getID();
+	}
+
 	public static void main(String[] args) {
 		GraphTest gt = new GraphTest();
 		new GUI(gt);

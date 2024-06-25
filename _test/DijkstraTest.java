@@ -24,9 +24,37 @@ public class DijkstraTest {
        DijkstraInfo dStart = new DijkstraInfo(vStart,0,null);
        dStart.setDistanz(0);
        gelbeListe.append(dStart);
-       //TODO
+       
+       gelbeListe.toFirst();
+       while (gelbeListe.hasAccess()) {
+    	  Vertex aktuellGelbeListe = gelbeListe.getContent().getVertex();
+    	  List<Vertex> nachbar = graph.getNeighbours(aktuellGelbeListe);
+    
+    	 nachbar.toFirst();
+    	 while (nachbar.hasAccess()) {
+    		 DijkstraInfo akt = new DijkstraInfo(nachbar.getContent(),gelbeListe.getContent().getDistanz()+ graph.getEdge(nachbar.getContent(), aktuellGelbeListe).getWeight(),aktuellGelbeListe);
+    		 if (nachbar.getContent().isMarked() == false) {
+        		 
+    			inGelbeListeUpdaten(akt);
+    		
+			}	
+    		 nachbar.next();
+
+		}
+    	//in rote liste 
+    	 gelbeListe.toFirst();    	 
+    	 
+    	 gelbeListe.getContent().getVertex().setMark(true);
+    	 roteListe.append(gelbeListe.getContent());
+
+    	 gelbeListe.remove();
+    
+
+	}
+       
        return roteListe;
    }
+   
   
    /**
     * Sorgt dafuer, dass dInfo gemaess seiner Distanz
