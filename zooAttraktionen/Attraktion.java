@@ -51,7 +51,7 @@ public class Attraktion extends Vertex {
 	}
 	
 	public int ermittleMaxAbgabe(Attraktion pNachbar) {
-		lageplan
+
 		return -1;
 	}
 	
