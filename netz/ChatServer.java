@@ -31,7 +31,8 @@ public class ChatServer extends Server {
 
 	}
 
-		private int zustand;
+	private int zustand;
+
 	@Override
 	public void processMessage(String pClientIP, int pClientPort, String pMessage) {
 
@@ -46,73 +47,70 @@ public class ChatServer extends Server {
 				break;
 
 			case "CONNECT":
-				if(zustand == 0){
-				String eingabenname = msgPart.get(1);
-				String password = msgPart.get(2);
-				//ist der user in der Liste?
-				User mainUser = null;
+				if (zustand == 0) {
+					String eingabenname = msgPart.get(1);
+					String password = msgPart.get(2);
+					// ist der user in der Liste?
+					User mainUser = null;
 
-				for (User obj : uList) {
-					if (obj.getName().equals(eingabenname)) {
-						// Objekt gefunden
-						mainUser = obj;
-						mu= mainUser;
+					for (User obj : uList) {
+						if (obj.getName().equals(eingabenname)) {
+							// Objekt gefunden
+							mainUser = obj;
+							mu = mainUser;
+						}
 					}
-				}
-				if(mainUser== null){
-					this.send(pClientIP, pClientPort, "Der eingegebne name ist nicht registriert");
-				}else if (mainUser.getPw().equalsIgnoreCase(password)) {
-					this.send(pClientIP, pClientPort, "du bist jezt als "+mainUser.getName()+" angemeldet");
-					zustand = 1;
-	
-					aktiveUser.add(mainUser);
+					if (mainUser == null) {
+						this.send(pClientIP, pClientPort, "Der eingegebne name ist nicht registriert");
+					} else if (mainUser.getPw().equalsIgnoreCase(password)) {
+						this.send(pClientIP, pClientPort, "du bist jezt als " + mainUser.getName() + " angemeldet");
+						zustand = 1;
 
-				}else {
-					this.send(pClientIP, pClientPort, "password leider falsch du hund");
-					
-				}
-				
-				
-				}else this.send(pClientIP, pClientPort, "du bist schon angemeldet. ");
-	
-				
+						aktiveUser.add(mainUser);
+
+					} else {
+						this.send(pClientIP, pClientPort, "password leider falsch du hund");
+
+					}
+
+				} else
+					this.send(pClientIP, pClientPort, "du bist schon angemeldet. ");
+
 				break;
 			case "MSG":
-				
-				 User toUser = null;
 
-				 for (User obj : aktiveUser) {
+				User toUser = null;
+
+				for (User obj : aktiveUser) {
 					if (obj.getName().equals(msgPart.get(1))) {
 						// Objekt gefunden
 						toUser = obj;
 					}
 					if (toUser == null) {
 						this.send(pClientIP, pClientPort, "den affen gibt es nicht...");
-					}else 
-					this.send(toUser.getIp(), toUser.getPort(), msgPart.get(2));
+					} else
+						this.send(toUser.getIp(), toUser.getPort(), msgPart.get(2));
 				}
 
 				break;
 
 			case "TEST":
 				String msg = msgPart.get(1);
-			try {
-				this.send(pClientIP, pClientPort, msg);
-			} catch (Exception e) {
-				System.out.println("array nicht lang genug");
-			}
-					
-				
-				
+				try {
+					this.send(pClientIP, pClientPort, msg);
+				} catch (Exception e) {
+					System.out.println("array nicht lang genug");
+				}
+
 				break;
 			case "LOGOUT":
-				
-			for (User obj : aktiveUser) {
-				if (obj.equals(mu)) {
-					// Objekt gefunden
-					aktiveUser.remove(obj);
+
+				for (User obj : aktiveUser) {
+					if (obj.equals(mu)) {
+						// Objekt gefunden
+						aktiveUser.remove(obj);
+					}
 				}
-			}
 				mu = null;
 				zustand = 0;
 				send(pClientIP, pClientPort, "du hast dich abgemeldet");
@@ -120,14 +118,14 @@ public class ChatServer extends Server {
 			default:
 				switch (zustand) {
 					case 0:
-					this.send(pClientIP, pClientPort, "Du musst dich anmelden um den server zu verwenden");
+						this.send(pClientIP, pClientPort, "Du musst dich anmelden um den server zu verwenden");
 						break;
 					case 1:
-					this.send(pClientIP, pClientPort, "es stehen dir nur die folgenden befehle zur verfügung!");
+						this.send(pClientIP, pClientPort, "es stehen dir nur die folgenden befehle zur verfügung!");
 					default:
 						break;
-				}	
-		
+				}
+
 		}
 
 	}
@@ -141,13 +139,13 @@ public class ChatServer extends Server {
 	public static void main(String[] args) {
 		ChatServer cs = new ChatServer(4242);
 	}
-	public static String generateRandomIP() {
-    Random random = new Random();
-    return random.nextInt(256) + "." + 
-           random.nextInt(256) + "." +
-           random.nextInt(256) + "." + 
-           random.nextInt(256);
-}
 
+	public static String generateRandomIP() {
+		Random random = new Random();
+		return random.nextInt(256) + "." +
+				random.nextInt(256) + "." +
+				random.nextInt(256) + "." +
+				random.nextInt(256);
+	}
 
 }
