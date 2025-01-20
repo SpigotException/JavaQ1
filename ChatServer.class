@@ -1,0 +1,37 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+package netz;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class ChatServer extends Server {
+   public ChatServer(int pPort) {
+      super(pPort);
+      System.out.println("server is gestartet");
+   }
+
+   public void processNewConnection(String pClientIP, int pClientPort) {
+   }
+
+   public void processMessage(String pClientIP, int pClientPort, String pMessage) {
+      ArrayList<String> msgPart = new ArrayList();
+      String[] m = pMessage.split(":");
+      Collections.addAll(msgPart, m);
+      switch (((String)msgPart.get(0)).toUpperCase()) {
+         case "QUIT":
+            this.send(pClientIP, pClientPort, "keine lust mehr auf dich...der server beendet sich");
+            this.closeConnection(pClientIP, pClientPort);
+            break;
+         case "SEND":
+            this.send(pClientIP, pClientPort, (String)msgPart.get(1));
+      }
+
+   }
+
+   public void processClosingConnection(String pClientIP, int pClientPort) {
+   }
+
+   public static void main(String[] args) {
+      new ChatServer(4242);
+   }
+}
