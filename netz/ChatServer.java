@@ -2,13 +2,26 @@ package netz;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class ChatServer extends Server {
 
+	private ArrayList<User> uList;
+	private ArrayList<User> aktiveUser = new ArrayList<>();
+
 	public ChatServer(int pPort) {
 		super(pPort);
-		// TODO Auto-generated constructor stub
+
 		System.out.println("server is gestartet");
+		uList = new ArrayList<>();
+		initUserList();
+	}
+
+	private void initUserList() {
+		User u1 = new User("Jonass", "123", "11", 1, false);
+		uList.add(u1);
+		User u2 = new User("jakpie", "1234", "12", 2, false);
+		uList.add(u2);
 	}
 
 	@Override
@@ -17,23 +30,84 @@ public class ChatServer extends Server {
 
 	}
 
+		private int zustand;
 	@Override
 	public void processMessage(String pClientIP, int pClientPort, String pMessage) {
-		
+
 		ArrayList<String> msgPart = new ArrayList<String>();
 		String[] m = pMessage.split(":");
 		Collections.addAll(msgPart, m);
+
+		switch (msgPart.get(0).toUpperCase()) {
+			case "QUIT":
+				this.send(pClientIP, pClientPort, "keine lust mehr auf dich...der server beendet sich");
+				this.closeConnection(pClientIP, pClientPort);
+				break;
+
+			case "CONNECT":
+				if(zustand == 0){
+				String eingabenname = msgPart.get(1);
+				String password = msgPart.get(2);
+				//ist der user in der Liste?
+				User user = null;
+
+				for (User obj : uList) {
+					if (obj.getName().equals(eingabenname)) {
+						// Objekt gefunden
+						user = obj;
+					}
+				}
+				if(user== null){
+					this.send(pClientIP, pClientPort, "Der eingegebne name ist nicht registriert");
+				}else if (user.getPw().equalsIgnoreCase(password)) {
+					this.send(pClientIP, pClientPort, "du bist jezt als "+user.getName()+" angemeldet");
+					zustand = 1;
+	
+					aktiveUser.add(user);
+
+				}else {
+					this.send(pClientIP, pClientPort, "password leider falsch du hund");
+					
+				}
+				
+				
+				}else this.send(pClientIP, pClientPort, "du bist schon angemeldet. ");
+	
+				
+				break;
+			case "MSG":
+				
+				 User toUser = null;
+
+				 for (User obj : aktiveUser) {
+					if (obj.getName().equals(msgPart.get(1))) {
+						// Objekt gefunden
+						toUser = obj;
+					}
+					if (toUser == null) {
+						this.send(pClientIP, pClientPort, "den affen gibt es nicht...");
+					}else 
+					this.send(toUser.getIp(), toUser.getPort(), msgPart.get(2));
+				}
+
+				break;
+
+			case "TEST":
+				String msg = msgPart.get(1);
+				this.send(pClientIP, pClientPort, msg);
+				break;
+			default:
+				switch (zustand) {
+					case 0:
+					this.send(pClientIP, pClientPort, "Du musst dich anmelden um den server zu verwenden");
+						break;
+					case 1:
+					this.send(pClientIP, pClientPort, "es stehen dir nur die folgenden befehle zur verfügung!");
+					default:
+						break;
+				}	
 		
-		switch(msgPart.get(0).toUpperCase()) {
-		case "QUIT":
-			this.send(pClientIP, pClientPort, "keine lust mehr auf dich...der server beendet sich");
-			this.closeConnection(pClientIP, pClientPort);
-			break;
-			
-		case "SEND":
-			this.send(pClientIP, pClientPort, msgPart.get(1));
 		}
-		
 
 	}
 
@@ -42,9 +116,17 @@ public class ChatServer extends Server {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public static void main(String[] args) {
 		ChatServer cs = new ChatServer(4242);
 	}
+	public static String generateRandomIP() {
+    Random random = new Random();
+    return random.nextInt(256) + "." + 
+           random.nextInt(256) + "." +
+           random.nextInt(256) + "." + 
+           random.nextInt(256);
+}
+
 
 }
