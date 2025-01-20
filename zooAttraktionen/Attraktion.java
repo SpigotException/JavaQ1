@@ -50,12 +50,32 @@ public class Attraktion extends Vertex {
 		return maxBesucherzahl;
 	}
 	
-	public int ermittleMaxAbgabe(Attraktion pNachbar) {
-
-		return -1;
+	public double ermittleMaxAbgabe(Attraktion pNachbar) {
+		double ergebniss = 0;
+		List<Vertex> nachbarn = lageplan.getNeighbours(this);
+		nachbarn.toFirst();
+		Attraktion a =	(Attraktion) nachbarn.getContent();
+		while(nachbarn.hasAccess()) {
+			 a =	(Attraktion) nachbarn.getContent();
+			if(pNachbar.equals(a)) {
+				ergebniss = -1;
+				nachbarn.next();
+			}else ergebniss = 1;
+			nachbarn.remove();
+			nachbarn.next();
+		}
+		if(ergebniss == 1) {
+			int m = Integer.min(pNachbar.getMaxBesucherzahl()-pNachbar.getAktBesucherzahl(), this.aktBesucherzahl);
+			int e = Integer.min(m, (int) lageplan.getEdge(pNachbar, this).getWeight());
+			return e;
+		}else return -1;
 	}
+
+
 	
 	public List<Attraktion> wasLiefereIch(){
+		
+		
 		return null;
 	}
 

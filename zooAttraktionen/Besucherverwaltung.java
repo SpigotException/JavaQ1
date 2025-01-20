@@ -3,8 +3,10 @@ package zooAttraktionen;
 import graph.Edge;
 import graph.Graph;
 import graph.GraphWithViewer;
+import graph.Vertex;
 import gui.GUI;
 import linear.List;
+import linear.ListWithViewer;
 
 public class Besucherverwaltung {
 	private GraphWithViewer lageplan;
@@ -16,11 +18,38 @@ public class Besucherverwaltung {
 	// Liste der Attraktionen, die von einem Startort aus NICHT in zwei Schritten zu erreichen sind
 	public List<Attraktion> gibWeitentfernte(Attraktion pStart){
 		List ergList = new List<Attraktion>();
-		// TODO
-		
-		
-		return ergList;
+	
+
 	}
+	
+	public List<Vertex> breitendurchlaufVonKassel(String s){
+		lageplan.setAllVertexMarks(false);
+		lageplan.setAllEdgeMarks(false);
+		Vertex vKassel = lageplan.getVertex(s);
+		return breitendurchlauf(vKassel);
+	}
+
+	// NICHT-rekursive Methode
+	private List<Vertex> breitendurchlauf(Vertex pVertex) {
+		List<Vertex> ergebnis = new ListWithViewer<>();
+		ergebnis.append(pVertex);
+		pVertex.setMark(true);
+		ergebnis.toFirst();
+		while(ergebnis.hasAccess()) {
+			List<Vertex> nachbarn = lageplan.getNeighbours(ergebnis.getContent());
+			nachbarn.toFirst();
+			while(nachbarn.hasAccess()) {
+				if(nachbarn.getContent().isMarked() == false) {
+					nachbarn.getContent().setMark(true);
+					ergebnis.append(nachbarn.getContent());	
+				}
+				nachbarn.next();		
+			}
+			ergebnis.next();	
+		}
+		return ergebnis;
+	}
+
 
 	private void initGraph() {
 		lageplan = new GraphWithViewer();
@@ -70,10 +99,15 @@ public class Besucherverwaltung {
 		lageplan.switchToISOMLayout();
 		
 	}
+	
+	
 
 	public static void main(String[] args) {
-		new GUI(new Besucherverwaltung());
-
+		
+Besucherverwaltung b1 = new Besucherverwaltung();
+Attraktion a =(Attraktion) b1.lageplan.getVertex("Ziegen");
+System.out.println(a.ermittleMaxAbgabe( (Attraktion) b1.lageplan.getVertex("Esel")));
+new GUI(b1);
 	}
 
 }

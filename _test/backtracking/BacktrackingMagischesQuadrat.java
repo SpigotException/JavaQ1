@@ -26,12 +26,26 @@ class BacktrackingMagischesQuadrat{
 	
 	public boolean findeLoesung(int pStelle){
 		ausgeben();
-		//TODO
+		if(pStelle == 9) {
+			return magisch();
+			
+		}
+		int x = pStelle % 3;
+		int y = pStelle / 3;
+		for(int i = 1; i<=9; i++ ) {
+		
+			quadrat[x][y] = i;
+			if (esGibtDoppelte()== false) {
+				
+				break;
+			}
+		}
+
+		findeLoesung(pStelle+1);
 		
 		// x: Spaltennummer (0..2); 
 		// y: Zeilennummer(0..2)
-		int x = pStelle % 3;
-		int y = pStelle / 3;
+
 		//TODO
 		return false;
 	}
