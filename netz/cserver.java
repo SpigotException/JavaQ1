@@ -16,9 +16,9 @@ public class cserver extends Server {
     }
 
     private void initUserList() {
-        User u1 = new User("Jonass", "123", "11", 1, false);
+        User u1 = new User("Jonass", "123", "none", -1, false);
         uList.add(u1);
-        User u2 = new User("jakpie", "1234", "12", 2, false);
+        User u2 = new User("jakpie", "1234", "none", -1, false);
         uList.add(u2);
     }
 
@@ -63,6 +63,7 @@ public class cserver extends Server {
                             
                             loginUser(user, pClientIP, pClientPort);
                             this.send(pClientIP, pClientPort, "Du bist angemeldet");
+                            System.out.println(pClientIP+pClientPort);
                         } else {
                             this.send(pClientIP, pClientPort, "Falsches Passwort");
                         }
@@ -76,15 +77,16 @@ public class cserver extends Server {
                 break;
                 case "LOGOUT":
                 User u = getConnectedUser(pClientIP, pClientPort);
-                u.setIp(null);
+                u.setIp("null");
                 u.setPort(-1);
                 this.send(pClientIP, pClientPort, "Du hast dich abgemeldet");
                 break;
                 
                 case "MSG":
+                User u1 = getConnectedUser(pClientIP, pClientPort);
                 String msg = msgPart.get(1);
-               this.sendToAll(msg);
-               User u1 = getConnectedUser(pClientIP, pClientPort);
+               this.sendToAll(u1.getName()+": "+msg);
+           
                 verlauf.push(u1.getName()+": "+ msg);
               
                 break;
@@ -92,6 +94,9 @@ public class cserver extends Server {
                    String top= verlauf.top();
                    this.send(pClientIP, pClientPort, top);
 
+                break;
+                default: 
+                this.send(pClientIP, pClientPort, "Den befhel gibt es nicht");
                 break;
         }
         
