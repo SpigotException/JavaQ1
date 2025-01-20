@@ -15,10 +15,10 @@ public class BildAnzeigen {
 	}
 	private static JFrame frame;
 	private static JLabel label;
-	public void anzeigen(String bildPfad,int Breite, int Höhe) {
+	public void anzeigen(String bildPfad,int Breite, int Hoehe) {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(Breite,Höhe);
+		frame.setSize(Breite,Hoehe);
 		
 		ImageIcon icon = new ImageIcon(bildPfad);
 		label.setIcon(icon);
