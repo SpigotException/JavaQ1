@@ -33,6 +33,8 @@ public class cserver extends Server {
         return null;
     }
 
+    
+
     private void loginUser(User user, String pClientIP, int pClientPort) {
         user.setIp(pClientIP);
         user.setPort(pClientPort);
@@ -96,7 +98,7 @@ public class cserver extends Server {
 
                 break;
                 default: 
-                this.send(pClientIP, pClientPort, "Den befhel gibt es nicht");
+                this.send(pClientIP, pClientPort, "Den befehl gibt es nicht");
                 break;
         }
         
